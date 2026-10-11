@@ -420,7 +420,7 @@ st.addEventListener("pointermove",e=>{
  fl("❤️",e.clientX-r.left,e.clientY-r.top);
  st.classList.add("pet-happy");setTimeout(()=>st.classList.remove("pet-happy"),500);if(Date.now()-hapT>2000){hapT=Date.now();st.classList.add("pet-eyes");setTimeout(()=>st.classList.remove("pet-eyes"),900)}
  const now=Date.now(),cd=(3-S.up.cd*.5)*1000;
- if(now-last>=cd){last=now;const g=Math.max(1,Math.round((5+S.up.coin*2)*(1+S.up.gold*.25)*((Math.min(S.hunger,S.clean,S.fun,S.energy)<15)?.5:1)*(Math.random()<S.up.luck*.05?3:1)));S.coins+=g;save();$("coins").textContent="🪙 "+S.coins;fl("+"+g,e.clientX-r.left+20,e.clientY-r.top-20);renderList()}
+ if(now-last>=cd){last=now;const g=Math.max(1,Math.round((5+S.up.coin*5)*(1+S.up.gold*.20)*((Math.min(S.hunger,S.clean,S.fun,S.energy)<15)?.5:1)*(Math.random()<S.up.luck*.05?3:1)));S.coins+=g;save();$("coins").textContent="🪙 "+S.coins;fl("+"+g,e.clientX-r.left+20,e.clientY-r.top-20);renderList()}
 });
 function bar(l,v,c){return `<div class="bw">${l} ${Math.round(v)}%<div class="bar"><i style="width:${v}%;background:${v<25?'#e55353':c}"></i></div></div>`}
 function stats(){if(!S.pet)return;$("stats").innerHTML=bar("🍖 Fullness",S.hunger,"#ff9f43")+bar("🫧 Cleanliness",S.clean,"#48a9f8");$("mood").textContent=(S.hunger<15||S.clean<15)?"😢 Your pet is unhappy – petting gives only half the coins":S.hunger<25?"🍖 Your pet is hungry!":S.clean<25?"🫧 Your pet is dirty!":""}
