@@ -344,7 +344,7 @@ const SKINS=[["Default",null,0],["White","#f2efe9",300],["Black","#3a3a44",300],
 const DEF={dog:"#c98b4f",cat:"#f0a35c",parrot:"#3fb56b"};
 const NAMES={dog:"Dog",cat:"Cat",parrot:"Parrot"};
 const BEDS=[["Basic bed","#d9534f","#f08a84",250],["Soft cushion","#7e57c2","#b39ddb",500],["Royal bed","#d4a017","#ffe082",900],["Golden throne","#b8860b","#ffd700",3500],["Starry cradle","#3b2d8f","#8f7bff",7000]];
-const UPS=[["Stronger petting","💪","coin",250,8],["Faster petting","⚡","cd",300,3],["Sky Jump bonus","🚀","sky",300,8],["Slower decay","🐢","slow",350,5],["Lucky touch","🍀","luck",400,5],["Pocket money","💰","pas",500,8],["Care discount","🏷️","disc",400,3],["Golden paw","🏅","gold",3000,4],["Quest bonus","📜","qd",1500,4]];
+const UPS=[["Stronger petting","💪","coin",250,8],["Faster petting","⚡","cd",300,3],["Sky Jump bonus","🚀","sky",300,8],["Slower decay","🐢","slow",350,5],["Lucky touch","🍀","luck",400,5],["Pocket money","💰","pas",500,8],["Care discount","🏷️","disc",400,3],["Golden paw","🏅","gold",2250,6],["Quest bonus","📜","qd",1500,4]];
 const HATS=[["Cap","🧢",250],["Sunglasses","🕶️",350],["Top hat","🎩",500],["Crown","👑",1000],["Graduation cap","🎓",800],["Helmet","🪖",1500],["Diamond","💎",2500],["UFO","🛸",6000]];
 const TABS=["Beds","Upgrades","Skins","Accessories","Care","Furniture","Quests"];
 const FOOD=[["Cookie","🍪",10,20],["Meat","🍖",25,50],["Feast","🍲",50,100]];
@@ -420,7 +420,7 @@ st.addEventListener("pointermove",e=>{
  fl("❤️",e.clientX-r.left,e.clientY-r.top);
  st.classList.add("pet-happy");setTimeout(()=>st.classList.remove("pet-happy"),500);if(Date.now()-hapT>2000){hapT=Date.now();st.classList.add("pet-eyes");setTimeout(()=>st.classList.remove("pet-eyes"),900)}
  const now=Date.now(),cd=(3-S.up.cd*.5)*1000;
- if(now-last>=cd){last=now;const g=Math.max(1,Math.round((5+S.up.coin*4)*(1+S.up.gold*.20)*((Math.min(S.hunger,S.clean,S.fun,S.energy)<15)?.5:1)*(Math.random()<S.up.luck*.05?3:1)));S.coins+=g;save();$("coins").textContent="🪙 "+S.coins;fl("+"+g,e.clientX-r.left+20,e.clientY-r.top-20);renderList()}
+ if(now-last>=cd){last=now;const g=Math.max(1,Math.round((5+S.up.coin*4)*(1+S.up.gold*.40)*((Math.min(S.hunger,S.clean,S.fun,S.energy)<15)?.5:1)*(Math.random()<S.up.luck*.05?3:1)));S.coins+=g;save();$("coins").textContent="🪙 "+S.coins;fl("+"+g,e.clientX-r.left+20,e.clientY-r.top-20);renderList()}
 });
 function bar(l,v,c){return `<div class="bw">${l} ${Math.round(v)}%<div class="bar"><i style="width:${v}%;background:${v<25?'#e55353':c}"></i></div></div>`}
 function stats(){if(!S.pet)return;$("stats").innerHTML=bar("🍖 Fullness",S.hunger,"#ff9f43")+bar("🫧 Cleanliness",S.clean,"#48a9f8");$("mood").textContent=(S.hunger<15||S.clean<15)?"😢 Your pet is unhappy – petting gives only half the coins":S.hunger<25?"🍖 Your pet is hungry!":S.clean<25?"🫧 Your pet is dirty!":""}
@@ -784,7 +784,7 @@ function questRows(){dayCheck();const t=ymd(new Date()),y=ymd(new Date(Date.now(
  $("list").insertAdjacentHTML("beforeend",'<div style="font-weight:800;margin:8px 2px 2px">🏆 Achievements</div>');
  ACH.map((a,i)=>({a,i,v:a[3](),c:!!S.ach[i]})).sort((x,y2)=>((x.c?2:x.v>=x.a[4]?0:1)-(y2.c?2:y2.v>=y2.a[4]?0:1))).forEach(o=>{const a=o.a,done=o.v>=a[4];
   row(a[0],a[1],a[2]+" · "+Math.min(o.v,a[4])+"/"+a[4]+" · +"+a[5]+" 🪙",mk(o.c?"✓":done?"Claim":"…",()=>{S.ach[o.i]=1;give(a[5],"🏆 "+a[1])},o.c||!done))})}
-UEFF.gold=l=>`Petting coins ×${1+l*.25}`;UEFF.qd=l=>`Quest rewards +${l*25} %`;
+UEFF.gold=l=>`Petting coins ×${+(1+l*.40).toFixed(2)}`;UEFF.qd=l=>`Quest rewards +${l*25} %`;
 {const _t=renderTabs;renderTabs=function(){TABS[6]="Quests"+(claimN()?" ❗":"");_t()}}
 {const _x=fx;fx=function(e){_x(e);evt(e==="🫧"?"wash":e==="💤"?"sleep":["🍪","🍖","🍲","🍓","🍎"].includes(e)?"feed":"play",1)}}
 {const _f=fl;fl=function(t,x,y){_f(t,x,y);if(typeof t==="string"&&t[0]==="+"&&t.length<5)evt("pet",1)}}
